@@ -68,8 +68,8 @@ adjustCounts <- function(df){
   df$exonic_bases.norm <- scale(log(df$exonic_bases),center=T,scale=T)
 
   #Linear fit of raw CNV counts by normalized length, GC, and exonic bases
-  triple_norm.CTRL.fit <- lm(control_CNV ~ GC.norm + gene_length.norm + exonic_bases.norm,data=df)
-  triple_norm.CASE.fit <- lm(case_CNV ~ GC.norm + gene_length.norm + exonic_bases.norm,data=df)
+  triple_norm.CTRL.fit <- lm(control_CNV ~ 0 + GC.norm + gene_length.norm + exonic_bases.norm,data=df)
+  triple_norm.CASE.fit <- lm(case_CNV ~ 0 + GC.norm + gene_length.norm + exonic_bases.norm,data=df)
 
   #Apply corrections for raw CNV counts and round negative corrected counts to zero
   df$control_CNV.adj <- triple_norm.CTRL.fit$residuals
@@ -84,8 +84,8 @@ adjustCounts <- function(df){
   df$sum_adj_CNV_round <- df$control_CNV.adj_round + df$case_CNV.adj_round
 
   #Linear fit of weighted CNV counts by normalized length, GC, and exonic bases
-  triple_norm.CTRL_weighted.fit <- lm(control_CNV_weighted ~ GC.norm + gene_length.norm + exonic_bases.norm,data=df)
-  triple_norm.CASE_weighted.fit <- lm(case_CNV_weighted ~ GC.norm + gene_length.norm + exonic_bases.norm,data=df)
+  triple_norm.CTRL_weighted.fit <- lm(control_CNV_weighted ~ 0 + GC.norm + gene_length.norm + exonic_bases.norm,data=df)
+  triple_norm.CASE_weighted.fit <- lm(case_CNV_weighted ~ 0 + GC.norm + gene_length.norm + exonic_bases.norm,data=df)
 
   #Apply corrections for raw CNV counts and round negative corrected counts to zero
   df$control_CNV_weighted.adj <- triple_norm.CTRL_weighted.fit$residuals
